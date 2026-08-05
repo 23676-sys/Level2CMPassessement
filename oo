@@ -1,0 +1,96 @@
+import pandas as pd
+def get_points(placing):
+    """calculates points earned based on race placing"""
+    if placing == 1:
+        return 5
+    elif placing == 2:
+        return 3
+    elif placing == 3:
+        return 1 
+    else:
+        return 0 
+    
+
+def main():
+    # Get a team name (but max is 6 in each team)
+    team_name = input("Enter Team Name: ").strip()
+
+    #Lists to store collected reider data
+    rider_names = []
+    all_placings = [] # list of lists for 4 races 
+    total_tallies = [] # total calculated points per rider 
+
+# Get rider count (to make sure its not over 6 people)
+while True:
+    try: 
+        num_riders = int(input(f"How many riders in Team {team_name}? "))
+        if 1 <= num_riders <= 6:
+            break
+        print ("Please enter a number between 1 and 6.")
+        
+    except ValueError:
+        print("Invaid input. Please enter a whole numebr ")
+
+print("\n--- Enter Rider Data ---")
+
+# Collect data for each rider
+for i in range(num_riders):
+    print(f"\nRider {i + 1}:.")
+    name = input(" Enter Rider Name: ").strip()
+
+    placings = []
+    rider_points = 0
+
+    # Loop through 4 races
+    for race in range(1, 5):
+        while True:
+            try:
+                place = int(
+                    input(
+                        f" Race {race} placing (0 if did not compete): "
+                    )
+                )
+                if place >= 0:
+                    break
+                print("Placing cannot be negative.")
+            except ValueError:
+                print("Invalid input. Please enter a number.")
+
+        placings.append(place)
+        rider_points += get_points(place)
+
+        # Store rider data
+        rider_names.append(name)
+        all_placings.append(placings)
+        total_tallies.append(rider_points)
+
+    # Create pandas DataFrame
+    # Split placings into separate race columns
+    race1 = [p[0] for p in all_placings]
+    race2 = [p[1] for p in all_placings]
+    race3 = [p[2] for p in all_placings]
+    race4 = [p[3] for p in all_placings]
+
+    data = {
+        "Rider Name": rider_names,
+        "Race 1": race1,
+        "Race 2": race2,
+        "Race 3": race3,
+        "Race 4": race4,
+        "Calculated Tally": total_tallies,
+    }
+
+    df = pd.DataFrame(data)
+    # Set rider name as index for clean display matching task table
+    df.set_index("Rider Name",  inplace=True)
+
+    # Output results
+    print("\n" + "=" * 50)
+    print(f"Team: {team_name.upper()}")
+    print("=" * 50)
+    print(df.to_string())
+    print("=" * 50)
+
+    # Run the program 
+    if __name__ == "__main__":
+        main()
