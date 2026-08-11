@@ -1,4 +1,6 @@
-import pandas as pd
+from turtle import pd
+
+
 def get_points(placing):
     """calculates points earned based on race placing"""
     if placing == 1:
@@ -11,18 +13,18 @@ def get_points(placing):
         return 0 
     
 
-def main():
-    # Get a team name (but max is 6 in each team)
-    team_name = input("Enter Team Name: ").strip()
+def main(question): 
+    team_name = input(question)
 
-    #Lists to store collected reider data
-    rider_names = []
-    all_placings = [] # list of lists for 4 races 
-    total_tallies = [] # total calculated points per rider 
+# Lists to store collected reider data
+rider_names = []
+all_placings = [] # list of lists for 4 races 
+total_tallies = [] # total calculated points per rider 
 
 # Get rider count (to make sure its not over 6 people)
 while True:
     try: 
+        team_name = main("Enter team name:")
         num_riders = int(input(f"How many riders in Team {team_name}? "))
         if 1 <= num_riders <= 6:
             break
@@ -40,6 +42,8 @@ for i in range(num_riders):
 
     placings = []
     rider_points = 0
+    
+ 
 
     # Loop through 4 races
     for race in range(1, 5):
