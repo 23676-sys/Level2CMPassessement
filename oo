@@ -1,8 +1,8 @@
+from py_compile import main
+
 import pandas as pd
 
-
 def get_points(placing):
-    """calculates points earned based on race placing"""
     if placing == 1:
         return 5
     elif placing == 2:
@@ -13,25 +13,22 @@ def get_points(placing):
         return 0 
     
 
-def main(question= "Enter team name: "): 
-     return input(question)
-
 # Lists to store collected reider data
 rider_names = []
 all_placings = [] # list of lists for 4 races 
 total_tallies = [] # total calculated points per rider 
 
+
 # Get rider count (to make sure its not over 6 people)
 while True:
     try: 
-        team_name = main("Enter team name:")
+        team_name = input("Enter team name:")
         num_riders = int(input(f"How many riders in Team {team_name}? "))
         if 1 <= num_riders <= 6:
             break
         print ("Please enter a number between 1 and 6.")
-        
     except ValueError:
-        print("Invaid input. Please enter a whole numebr ")
+        print("Invalid input. Please enter a whole number ")
 
 print("\n--- Enter Rider Data ---")
 
@@ -52,11 +49,12 @@ for i in range(num_riders):
                 place = int(
                     input(
                         f" Race {race} placing (0 if did not compete): "
-                    )
+                   )
                 )
                 if place >= 0:
                     break
                 print("Placing cannot be negative.")
+            
             except ValueError:
                 print("Invalid input. Please enter a number.")
 
@@ -95,6 +93,6 @@ for i in range(num_riders):
     print(df.to_string())
     print("=" * 50)
 
-    # Run the program 
-    if __name__ == "__main__":
-        main()
+if __name__ == "__main__":
+    main()
+  
